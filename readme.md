@@ -19,8 +19,8 @@ https://ai-resume-analyzer-xz0n.onrender.com/api/login/
 ### Recruiter
 
 ```
-Email:
-recruiter@example.com
+Username:
+recruiter
 
 Password:
 Recruiter@123
@@ -29,8 +29,8 @@ Recruiter@123
 ### Candidate
 
 ```
-Email:
-candidate@example.com
+Username:
+candidate
 
 Password:
 Candidate@123
