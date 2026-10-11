@@ -1,125 +1,193 @@
 # AI Resume Analyzer & Job Matcher
 
-An AI-powered Django REST Framework application that helps candidates analyze resumes, match them with job descriptions, and apply for jobs, while allowing recruiters to manage job postings and review applicants.
+An AI-powered Django REST Framework backend that enables candidates to upload resumes, receive AI-based resume analysis, match resumes with job descriptions, and apply for jobs. Recruiters can create job postings and manage applications submitted by candidates.
 
 ---
 
-## Features
+## 🚀 Live API
 
-### Authentication
-- JWT Authentication
+**Base URL**
+
+```
+https://ai-resume-analyzer-xz0n.onrender.com/api/login/
+```
+
+---
+
+## 🔑 Demo Credentials
+
+### Recruiter
+
+```
+Email:
+recruiter@example.com
+
+Password:
+Recruiter@123
+```
+
+### Candidate
+
+```
+Email:
+candidate@example.com
+
+Password:
+Candidate@123
+```
+
+> **Note:** Replace these credentials with your actual demo accounts after creating them in the deployed application.
+
+---
+
+# Features
+
+## Authentication
+
 - User Registration
-- User Login
-- Role-based Access (Candidate & Recruiter)
+- JWT Login
+- Role-based Authentication
+- Candidate
+- Recruiter
 
-### Resume Management
-- Upload PDF Resume
+---
+
+## Resume Management
+
+- Upload Resume (PDF)
+- View Uploaded Resume
 - Update Resume
 - Delete Resume
-- View Uploaded Resume
-- PDF Text Extraction using PyMuPDF
 
-### AI Resume Analysis
-- Resume analysis using Google Gemini AI
-- Resume summary generation
+---
+
+## AI Resume Analysis
+
+Google Gemini AI analyzes uploaded resumes and provides:
+
+- Resume Summary
 - ATS Score
-- Missing Skills Detection
-- Resume Improvement Suggestions
+- Missing Skills
+- Improvement Suggestions
 
-### Job Management
-- Recruiters can Create Jobs
-- Update Jobs
-- Delete Jobs
-- View Jobs
+---
 
-### Job Search
-- Search Jobs
-- Filter Jobs
-- Order Jobs
+## Job Management
+
+Recruiters can
+
+- Create Job
+- Update Job
+- Delete Job
+- View Their Jobs
+
+---
+
+## Job Search
+
+Supports
+
+- Search
+- Filter
+- Ordering
 - Pagination
 
-### AI Job Matching
-- Compare Resume with Job Description
+---
+
+## AI Job Matching
+
+Candidates can compare their resume with any job posting.
+
+Returns
+
 - Match Score
 - Matching Skills
 - Missing Skills
 - AI Recommendation
 
-### Job Applications
+---
+
+## Job Applications
+
+Candidates can
+
 - Apply for Jobs
-- Duplicate Application Prevention
-- Resume Ownership Validation
-- Recruiters can view applicants for their jobs
+- Apply only once per job
+
+Recruiters can
+
+- View applicants for jobs they posted
 
 ---
 
-## Tech Stack
+# Tech Stack
 
 - Python
 - Django
 - Django REST Framework
-- PostgreSQL
-- Simple JWT
+- PostgreSQL (Neon)
+- JWT Authentication
 - Google Gemini API
 - PyMuPDF
 - Django Filter
+- Gunicorn
+- Render
 - Git & GitHub
 
 ---
 
-## Project Structure
+# API Endpoints
+
+## Authentication
 
 ```
-ai_resume_analyzer/
-│
-├── config/
-│
-├── core/
-│   ├── models.py
-│   ├── serializers.py
-│   ├── views.py
-│   ├── permissions.py
-│   ├── gemini.py
-│   ├── urls.py
-│   └── utils.py
-│
-├── media/
-├── manage.py
-├── requirements.txt
-└── README.md
+POST /api/register/
+POST /api/login/
 ```
 
 ---
 
-## API Features
+## Resume
 
-### Authentication
-- Register
-- Login
-
-### Resume
-- Upload Resume
-- List Resume
-- Update Resume
-- Delete Resume
-
-### Jobs
-- Create Job
-- List Jobs
-- Update Job
-- Delete Job
-
-### Applications
-- Apply for Job
-- Recruiter Applicant List
-
-### AI
-- Resume Analysis
-- Job Match
+```
+GET    /api/resumes/
+POST   /api/resumes/
+PUT    /api/resumes/<id>/
+DELETE /api/resumes/<id>/
+```
 
 ---
 
-## Search
+## Jobs
+
+```
+GET    /api/jobs/
+POST   /api/jobs/
+PUT    /api/jobs/<id>/
+DELETE /api/jobs/<id>/
+```
+
+---
+
+## Applications
+
+```
+POST /api/apply/
+GET  /api/recruiter/applications/
+```
+
+---
+
+## AI
+
+```
+POST /api/resume-analysis/
+POST /api/job-match/
+```
+
+---
+
+# Search
 
 Example
 
@@ -129,9 +197,7 @@ GET /api/jobs/?search=python
 
 ---
 
-## Filter
-
-Example
+# Filter
 
 ```
 GET /api/jobs/?location=Bangalore
@@ -143,9 +209,7 @@ GET /api/jobs/?company=Google
 
 ---
 
-## Ordering
-
-Example
+# Ordering
 
 ```
 GET /api/jobs/?ordering=salary
@@ -157,9 +221,7 @@ GET /api/jobs/?ordering=-created_at
 
 ---
 
-## Pagination
-
-Example
+# Pagination
 
 ```
 GET /api/jobs/?page=1
@@ -171,67 +233,64 @@ GET /api/jobs/?page=2
 
 ---
 
-## AI Resume Analysis Flow
+# AI Resume Analysis Flow
 
-Candidate uploads a PDF resume
-
-↓
-
-PyMuPDF extracts text from the resume
-
-↓
-
-Google Gemini AI analyzes the extracted content
-
-↓
-
-The system generates:
-
-- Resume Summary
-- ATS Score
-- Missing Skills
-- Improvement Suggestions
+```
+Candidate Uploads Resume
+            │
+            ▼
+PDF Text Extraction (PyMuPDF)
+            │
+            ▼
+Google Gemini AI
+            │
+            ▼
+Resume Summary
+ATS Score
+Missing Skills
+Suggestions
+```
 
 ---
 
-## AI Job Match Flow
+# AI Job Match Flow
 
-Candidate selects
+```
+Candidate Selects
 
-- Resume
-- Job
+Resume
++
+Job
 
-↓
+        │
+        ▼
 
-Gemini AI compares
+Google Gemini AI
 
-- Resume Skills
-- Required Job Skills
+        │
+        ▼
 
-↓
-
-Returns
-
-- Match Score
-- Matching Skills
-- Missing Skills
-- Recommendation
+Match Score
+Matching Skills
+Missing Skills
+Recommendation
+```
 
 ---
 
-## Business Rules
+# Business Rules
 
-- Only Recruiters can create, update and delete jobs.
-- Only Candidates can apply for jobs.
-- Candidates can apply only once per job.
+- Only recruiters can create, update and delete jobs.
+- Only candidates can apply for jobs.
 - Candidates can only use their own resumes.
-- Recruiters can only view applications for jobs they created.
+- Candidates can apply only once per job.
+- Recruiters can only view applications submitted for their jobs.
 
 ---
 
-## Installation
+# Installation
 
-Clone Repository
+Clone the repository
 
 ```bash
 git clone https://github.com/UdayM07/ai-resume-analyzer.git
@@ -243,13 +302,13 @@ Move into project
 cd ai-resume-analyzer
 ```
 
-Create Virtual Environment
+Create virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-Activate Virtual Environment
+Activate virtual environment
 
 Windows
 
@@ -257,19 +316,19 @@ Windows
 venv\Scripts\activate
 ```
 
-Install Dependencies
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run Migrations
+Run migrations
 
 ```bash
 python manage.py migrate
 ```
 
-Start Server
+Run server
 
 ```bash
 python manage.py runserver
@@ -277,33 +336,53 @@ python manage.py runserver
 
 ---
 
-## Environment Variables
+# Environment Variables
 
-Create a `.env` file in the project root.
+Create a `.env` file
 
 ```
 SECRET_KEY=your_secret_key
 
 GEMINI_API_KEY=your_gemini_api_key
+
+DATABASE_URL=your_database_url
+
+DEBUG=True
 ```
 
 ---
 
-## Future Improvements
+# Deployment
 
-- Email Verification
-- Resume Versioning
-- Recruiter Dashboard
-- Interview Scheduling
-- Notifications
-- AI Skill Gap Learning Roadmap
+- Backend: Render
+- Database: Neon PostgreSQL
+- Version Control: GitHub
 
 ---
 
-## Author
+# Future Improvements
+
+- Email Verification
+- Resume Version History
+- Recruiter Dashboard
+- Interview Scheduling
+- Notifications
+- AI Learning Roadmap
+
+---
+
+# Author
 
 **Uday M**
 
 GitHub
 
+```
 https://github.com/UdayM07
+```
+
+Project Repository
+
+```
+https://github.com/UdayM07/ai-resume-analyzer
+```
