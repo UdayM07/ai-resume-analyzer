@@ -11,7 +11,9 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ".onrender.com",
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -64,6 +66,7 @@ DATABASES = {
     )
 }
 
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -110,9 +113,3 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
-
-
-
-
-
